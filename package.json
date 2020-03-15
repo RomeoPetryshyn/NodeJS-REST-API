@@ -1,0 +1,34 @@
+{
+  "name": "rest-shop",
+  "version": "1.0.0",
+  "description": "A Node.js RESTful API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RomeoPetryshyn/NodeJS-REST-API.git"
+  },
+  "keywords": [
+    "node",
+    "rest",
+    "api"
+  ],
+  "author": "Romeo Petryshyn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RomeoPetryshyn/NodeJS-REST-API/issues"
+  },
+  "homepage": "https://github.com/RomeoPetryshyn/NodeJS-REST-API#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.4",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
