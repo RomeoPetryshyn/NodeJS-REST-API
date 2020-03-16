@@ -7,14 +7,16 @@ const Product = require('../models/product-model');
 const compareObjects = require('../additional-functionality/compareObjectKeys');
 
 router.get('/', (req, res, next) => {
-    Product.find()
+    Product
+        .find()
+        .select('name price id')
         .exec()
         .then(doc => {
             res.status(200).json(doc);
         })
         .catch(err => {
             res.status(500).json(err);
-        })
+        });
 });
 
 router.post('/', (req, res, next) => {
@@ -33,29 +35,30 @@ router.post('/', (req, res, next) => {
             price: req.body.price
         });
         product
-        .save()
-        .then(result => {
-            res.status(201).json({
-                message: 'Product was created',
-                createdProduct: {
-                    id: result.id,
-                    name: result.name,
-                    price: result.price
-                }
+            .save()
+            .then(result => {
+                res.status(201).json({
+                    message: 'Product was created',
+                    createdProduct: {
+                        id: result.id,
+                        name: result.name,
+                        price: result.price
+                    }
+                });
+            })
+            .catch(err => {
+                res.status(500).json({
+                    message: 'Error. Product was not created',
+                    error: err
+                });
             });
-        })
-        .catch(err => {
-            res.status(500).json({
-                message: 'Error. Product was not created',
-                error: err
-            });
-        });
     }
 });
 
 router.get('/:productID', (req, res, next) => {
     const id = req.params.productID;
-    Product.findById(id)
+    Product
+        .findById(id)
         .exec()
         .then(doc => {
             res.status(200).json({
@@ -74,7 +77,7 @@ router.get('/:productID', (req, res, next) => {
                     message: 'Error. Could not return product data',
                     error: err
                 });
-            }
+            };
         });
 });
 
@@ -87,24 +90,26 @@ router.patch('/:productID', (req, res, next) => {
     if(!(compareObjects.compareKeys(req.body, updateOps))){
         res.status(400).json({
             message: 'Not valid JSON received'
-        })
+        });
     } else {
-        Product.updateOne({ _id: id }, { $set: updateOps })
-        .exec()
-        .then(result => {
-            res.status(200).json(result);
-        })
-        .catch(err => {
-            res.status(500).json({
+        Product
+            .updateOne({ _id: id }, { $set: updateOps })
+            .exec()
+            .then(result => {
+                res.status(200).json(result);
+            })
+            .catch(err => {
+                res.status(500).json({
                 error: err
             });
         });
-    }
+    };
 });
 
 router.delete('/:productID', (req, res, next) => {
     const id = req.params.productID;
-    Product.deleteOne({ _id: id })
+    Product
+        .deleteOne({ _id: id })
         .exec()
         .then(result => {
             res.status(200).json(result);
